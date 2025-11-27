@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8" />
+    <title>Calendario dell'Avvento</title>
+    <link rel="stylesheet" href="/static/style.css" />
+    <script defer src="/static/script.js"></script>
+</head>
+
+<body>
+
+<div class="snow"></div>
+
+<h1 class="title">Avvento pazzo di emminah</h1>
+
+<div class="grid">
+    {% for day, info in contents.items() %}
+        {% set locked = (current_day < day) %}
+        <div class="box {{ 'locked' if locked else '' }}"
+            onclick="{% if locked %}showLockedMessage(){% else %}openPopup({{ day }}){% endif %}">
+            <span>{{ day }}</span>
+        </div>
+    {% endfor %}
+</div>
+
+<div id="popup" class="popup">
+    <div class="popup-content">
+        <span class="close" onclick="closePopup()">&times;</span>
+        <h2 id="popup-title"></h2>
+        <audio id="popup-audio" controls></audio>
+        <img id="popup-img" src="">
+        <p id="popup-text"></p>
+    </div>
+</div>
+
+<button onclick="enableAdmin()" class="admin-invisible-btn">.</button>
+
+<script>
+    const contents = {{ contents | tojson | safe }};
+</script>
+
+</body>
+</html>
