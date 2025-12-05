@@ -41,7 +41,6 @@ function openPopup(day) {
 
     document.getElementById("popup-title").textContent = data.title;
     document.getElementById("popup-img").src = "/static/images/" + data.image; // verifica cartella
-    document.getElementById("popup-text").textContent = data.text;
 
     const audio = document.getElementById("popup-audio");
     audio.src = "/static/audio/musica" + day + ".mp3"; // verifica cartella e nomi file
