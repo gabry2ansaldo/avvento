@@ -2,6 +2,7 @@ from flask import Flask, render_template
 from datetime import date
 
 today = date.today()
+# Per testare metti CURRENT_DAY = 24
 CURRENT_DAY = today.day if today.month == 12 else 0
 
 app = Flask(__name__)
@@ -24,20 +25,18 @@ contents = {
     15: {"title": "15 Dicembre", "image": "day15.png"},
     16: {"title": "16 Dicembre", "image": "day16.png"},
     17: {"title": "17 Dicembre", "image": "day17.png"},
-    18: {"title": "18 Dicembre", "image": "day18.png"},
+    18: {"title": "18 Dicembre", "image": "day18.png", "game": "memory"},
     19: {"title": "19 Dicembre", "image": "day19.png"},
     20: {"title": "20 Dicembre", "image": "day20.png"},
     21: {"title": "21 Dicembre", "image": "day21.png"},
     22: {"title": "22 Dicembre", "image": "day22.png"},
-    23: {"title": "23 Dicembre", "image": "day23.png"},
+    23: {"title": "23 Dicembre", "image": "day23.png", "game": "catch"},
     24: {"title": "24 Dicembre", "image": "day24.png"}
 }
 
-
 @app.route("/")
 def home():
-    return render_template("index.html", contents=contents,
-        current_day=CURRENT_DAY)
+    return render_template("index.html", contents=contents, current_day=CURRENT_DAY)
 
 if __name__ == "__main__":
     app.run(debug=True)

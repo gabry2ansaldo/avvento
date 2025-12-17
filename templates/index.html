@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="/static/style.css" />
     <script defer src="/static/script.js"></script>
 </head>
-
 <body>
 
 <div class="snow"></div>
@@ -16,8 +15,8 @@
 <div class="grid">
     {% for day, info in contents.items() %}
         {% set locked = (current_day < day) %}
-        <div class="box {{ 'locked' if locked else '' }}"
-            onclick="{% if locked %}showLockedMessage(){% else %}openPopup({{ day }}){% endif %}">
+        <div class="box {{ 'locked' if locked else '' }}" 
+             onclick="{% if locked %}showLockedMessage(){% else %}openPopup({{ day }}){% endif %}">
             <span>{{ day }}</span>
         </div>
     {% endfor %}
@@ -28,6 +27,9 @@
         <span class="close" onclick="closePopup()">&times;</span>
         <h2 id="popup-title"></h2>
         <audio id="popup-audio" controls></audio>
+        
+        <div id="game-container"></div>
+        
         <img id="popup-img" src="">
         <p id="popup-text"></p>
     </div>
