@@ -190,7 +190,7 @@ function startJumpingGame() {
     // Layout con obiettivo a 22
     container.innerHTML = `
         <div id="game-info" style="margin-bottom:10px; font-weight:bold;">
-            Punti: <span id="score-val">0</span> / <span style="color:#e74c3c;">Obiettivo: 22</span>
+            Punti: <span id="score-val">0</span> / <span style="color:#e74c3c;">Obiettivo: 23</span>
         </div>
         <div id="game-box" style="cursor:pointer;">
             <div id="player"><img src="/static/images/${playerPhoto}"></div>
@@ -261,7 +261,7 @@ function startJumpingGame() {
                 if (!isGameOver) {
                     score++;
                     scoreVal.innerText = score;
-                    if (score === 22) {
+                    if (score === 23) {
                         winMsg.style.display = "block";
                     }
                 }
