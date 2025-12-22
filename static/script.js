@@ -46,8 +46,10 @@ function openPopup(day) {
     if (data.game === "memory") {
         startMemoryGame();
     } else if (data.game === "catch") {
-        startJumpingGame(); // Chiamiamo la nuova funzione
-    }
+        startJumpingGame();
+    } else if (data.game === "favorite") {
+        startFavoriteGame();
+}
 
     popup.classList.add("open");
 }
@@ -66,6 +68,7 @@ function closePopup() {
     popup.classList.remove("open");
 }
 
+//###############################################################
 // --- GIOCO 1: MEMORY CON CUORI E SENZA ALERT ---
 function startMemoryGame() {
     const container = document.getElementById("game-container");
@@ -175,6 +178,7 @@ function startMemoryGame() {
     }
 }
 
+//###############################################################
 // --- GIOCO 2: JUMPING GAME (SALTO FOTO) ---
 let isGameOver = false; 
 
@@ -285,4 +289,96 @@ function startJumpingGame() {
 
     // Avvio del primo ostacolo dopo un secondo
     setTimeout(spawnObstacle, 1000);
+}
+
+//#########################################################################
+function startFavoriteGame() {
+    const container = document.getElementById("game-container");
+    let score = 0;
+    const goal = 100;
+
+    const myPreferences = [
+        { name: "Tette", power: 9 }, { name: "Le tue tette", power: 10 },
+        { name: "Andare in montagna", power: 7 }, { name: "Andare al mare", power: 6 },
+        { name: "Patatine lime e pepe rosa", power: 7 }, { name: "TV sul divano", power: 6 },
+        { name: "Viaggiare", power: 8 }, { name: "Cani", power: 7 },
+        { name: "Gatti", power: 7 }, { name: "Salmo", power: 8 },
+        { name: "Polpette al sugo", power: 8 }, { name: "Lasagne", power: 8 },
+        { name: "Python", power: 6 }, { name: "Tu", power: 10 },
+        { name: "Fare pipì controvento", power: 1 }, { name: "Fare la cacca", power: 7 },
+        { name: "Fare la cacca controvento", power: 2 }, { name: "Fare cucchiaio", power: 3 },
+        { name: "Pizza", power: 7 }, { name: "Natale", power: 6 },
+        { name: "Pasqua", power: 4 }, { name: "Halloween", power: 5 },
+        { name: "Insta", power: 6 }, { name: "YT", power: 7 },
+        { name: "Chiedere cose a chat", power: 7 }, { name: "Fare regali", power: 5 },
+        { name: "Mangiare", power: 8 }, { name: "Patatine rustiche", power: 6 },
+        { name: "Patatine arrosto", power: 5 }, { name: "Patatine al pomodoro", power: 4 }
+    ];
+
+    container.innerHTML = `
+        <div class="fav-game-ui">
+            <div class="fav-header">
+                <h3>Quanto mi conosci?</h3>
+                <div class="score-bar-container">
+                    <div id="score-fill" style="width: 0%"></div>
+                </div>
+                <p>Affinità: <span id="fav-score">0</span>%</p>
+            </div>
+            <div id="options-container"></div>
+            <div id="fav-feedback"></div>
+        </div>
+    `;
+
+    const optionsContainer = document.getElementById("options-container");
+    const scoreVal = document.getElementById("fav-score");
+    const scoreFill = document.getElementById("score-fill");
+    const feedback = document.getElementById("fav-feedback");
+
+    function nextRound() {
+        if (score >= goal) return;
+        optionsContainer.innerHTML = "";
+        feedback.innerText = "Cosa preferisco?";
+        feedback.style.color = "#333";
+
+        const shuffled = [...myPreferences].sort(() => 0.5 - Math.random());
+        const roundOptions = shuffled.slice(0, 3);
+        const bestPower = Math.max(...roundOptions.map(o => o.power));
+
+        roundOptions.forEach(opt => {
+            const btn = document.createElement("button");
+            btn.className = "fav-card-btn";
+            btn.innerText = opt.name;
+            
+            btn.onclick = () => {
+                const allBtns = document.querySelectorAll(".fav-card-btn");
+                allBtns.forEach(b => b.style.pointerEvents = "none"); // Disabilita altri click
+
+                if (opt.power === bestPower) {
+                    score = Math.min(goal, score + 10);
+                    btn.classList.add("correct");
+                    feedback.innerText = "Esatto! +10pt";
+                    feedback.style.color = "#27ae60";
+                } else {
+                    score = Math.max(0, score - 5);
+                    btn.classList.add("wrong");
+                    feedback.innerText = "Sbagliato... -5pt";
+                    feedback.style.color = "#e74c3c";
+                }
+
+                scoreVal.innerText = score;
+                scoreFill.style.width = score + "%";
+
+                if (score >= goal) {
+                    setTimeout(() => {
+                        container.innerHTML = "<h2 style='color:#9b59b6; animation: bounce 1s infinite;'>❤️ MI CONOSCI ALLA PERFEZIONE! ❤️</h2>";
+                    }, 1000);
+                } else {
+                    setTimeout(nextRound, 1200);
+                }
+            };
+            optionsContainer.appendChild(btn);
+        });
+    }
+
+    nextRound();
 }
