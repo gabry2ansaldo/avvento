@@ -183,10 +183,10 @@ function startJumpingGame() {
     const container = document.getElementById("game-container");
     const playerPhoto = "memory/foto1.jpg"; 
 
-    // Layout con obiettivo a 23
+    // Layout con obiettivo a 22
     container.innerHTML = `
         <div id="game-info" style="margin-bottom:10px; font-weight:bold;">
-            Punti: <span id="score-val">0</span> / <span style="color:#e74c3c;">Obiettivo: 23</span>
+            Punti: <span id="score-val">0</span> / <span style="color:#e74c3c;">Obiettivo: 22</span>
         </div>
         <div id="game-box" style="cursor:pointer;">
             <div id="player"><img src="/static/images/${playerPhoto}"></div>
@@ -257,7 +257,7 @@ function startJumpingGame() {
                 if (!isGameOver) {
                     score++;
                     scoreVal.innerText = score;
-                    if (score === 23) {
+                    if (score === 22) {
                         winMsg.style.display = "block";
                     }
                 }
