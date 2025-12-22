@@ -318,7 +318,7 @@ function startFavoriteGame() {
     container.innerHTML = `
         <div class="fav-game-ui">
             <div class="fav-header">
-                <h3>Quanto mi conosci?</h3>
+                <h3>Cosa preferisco?</h3>
                 <div class="score-bar-container">
                     <div id="score-fill" style="width: 0%"></div>
                 </div>
@@ -337,7 +337,7 @@ function startFavoriteGame() {
     function nextRound() {
         if (score >= goal) return;
         optionsContainer.innerHTML = "";
-        feedback.innerText = "Cosa preferisco?";
+        feedback.innerText = "";
         feedback.style.color = "#333";
 
         const shuffled = [...myPreferences].sort(() => 0.5 - Math.random());
@@ -356,12 +356,12 @@ function startFavoriteGame() {
                 if (opt.power === bestPower) {
                     score = Math.min(goal, score + 10);
                     btn.classList.add("correct");
-                    feedback.innerText = "Esatto! +10pt";
+                    feedback.innerText = "Siii :) +10pt";
                     feedback.style.color = "#27ae60";
                 } else {
                     score = Math.max(0, score - 5);
                     btn.classList.add("wrong");
-                    feedback.innerText = "Sbagliato... -5pt";
+                    feedback.innerText = "Nooo :( -5pt";
                     feedback.style.color = "#e74c3c";
                 }
 
@@ -370,7 +370,7 @@ function startFavoriteGame() {
 
                 if (score >= goal) {
                     setTimeout(() => {
-                        container.innerHTML = "<h2 style='color:#9b59b6; animation: bounce 1s infinite;'>❤️ MI CONOSCI ALLA PERFEZIONE! ❤️</h2>";
+                        container.innerHTML = "<h2 style='color:#9b59b6; animation: bounce 1s infinite;'>❤️ Siamo anime gemelle! ❤️</h2>";
                     }, 1000);
                 } else {
                     setTimeout(nextRound, 1200);
